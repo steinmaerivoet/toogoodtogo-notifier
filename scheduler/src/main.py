@@ -8,6 +8,7 @@ import time
 import requests
 import configparser
 
+
 config = configparser.ConfigParser()
 config.read('tgtg.conf')
 config.sections()
@@ -74,7 +75,7 @@ def job():
 
 
 scheduler_interval = config['scheduler'].getint('sync_interval_seconds')
-schedule.every(1).seconds.do(job)
+schedule.every(scheduler_interval).seconds.do(job)
 
 while True:
     schedule.run_pending()
