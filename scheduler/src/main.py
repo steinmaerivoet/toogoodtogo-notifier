@@ -10,9 +10,11 @@ import configparser
 import logging
 
 
+# setup application
 config = configparser.ConfigParser()
 config.read('tgtg.conf')
 config.sections()
+logging.basicConfig(level=logging.INFO)
 
 # setup TGTG
 email = config['tgtg']['email']
