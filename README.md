@@ -1,4 +1,4 @@
-#Too Good To Go Notifier
+# Too Good To Go Notifier
 
 ## About
 [Too Good To Go](https://toogoodtogo.be/) is a platform for local food stores and restaurants to reduce food waste.
