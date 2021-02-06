@@ -34,7 +34,7 @@ I gathered some inspiration from a [docker blog](https://www.docker.com/blog/con
   [scheduler]
   sync_interval_seconds =
   ```      
-- Add `.env` to `./` to add MongoDB credentials as [environment variables[(https://docs.docker.com/compose/environment-variables/). 
+- Add `.env` to `./` to add MongoDB credentials as [environment variables](https://docs.docker.com/compose/environment-variables/). 
   ```
   MONGO_USERNAME=
   MONGO_PASSWORD=
