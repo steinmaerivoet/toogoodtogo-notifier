@@ -7,6 +7,7 @@ import schedule
 import time
 import requests
 import configparser
+import logging
 
 
 config = configparser.ConfigParser()
@@ -17,7 +18,7 @@ config.sections()
 email = config['tgtg']['email']
 password = config['tgtg']['password']
 tgtg_client = TgtgClient(email=email, password=password)
-print("Connected to TGTG service with user", email)
+logging.info("Connected to TGTG service with user %s", email)
 
 # setup Mongo client
 host = config['mongo']['host']
@@ -28,7 +29,7 @@ database = config['mongo']['database']
 mongo_client = MongoClient(host=host, port=port, username=username, password=password)
 tgtg_db = mongo_client[database]
 events_collection = tgtg_db["events"]
-print("Connected to Mongo DB", database)
+logging.info("Connected to Mongo DB %s", database)
 
 #setup callback url
 callbackUrl = config['callback']['url']
@@ -41,7 +42,7 @@ def item_updated(new_event):
 
 def insert_new_event(new_event):
     events_collection.insert_one(vars(new_event))
-    print("inserted new event")
+    logging.info("inserted new event")
 
 def create_event(item):
     store = item.get("store").get("store_name")
@@ -56,7 +57,7 @@ def fire_event(new_event):
     requests.post(url=callbackUrl, data=data, headers=headers)
 
 def job():
-    print("syncing items...")
+    logging.info("syncing items...")
 
     # get favorite items
     items = tgtg_client.get_items()
@@ -66,12 +67,12 @@ def job():
 
         if new_item_available(new_event):
             fire_event(new_event)
-            print("event fired!")
+            logging.info("event fired!")
 
         if item_updated(new_event):
             # store in database
             insert_new_event(new_event)
-            print("items in store", new_event, "updated with quantity", new_event.items_available)
+            logging.info("items in store %s updated with quantity %s", new_event, new_event.items_available)
 
 
 scheduler_interval = config['scheduler'].getint('sync_interval_seconds')
