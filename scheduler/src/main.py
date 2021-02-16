@@ -17,7 +17,7 @@ LOGGING_FORMAT = '%(asctime)-15s %(message)s'
 def main():
     # setup application
     config = configparser.ConfigParser()
-    config.read('scheduler/tgtg.conf')
+    config.read('tgtg.conf')
     config.sections()
     logging.basicConfig(level=logging.INFO, format=LOGGING_FORMAT)
 
